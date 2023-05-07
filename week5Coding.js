@@ -1,37 +1,37 @@
-class Player {
-    constructor(name, position) {
+class NewHire {
+    constructor(name, department) {
         this.name = name;
-        this.position = position;  //spelling is crucial one spelling error can stop code from running.
+        this.department = department;  //spelling is crucial one spelling error can stop code from running.
     }
 
     describe() {
-        return `${this.name} plays ${this.position}.`;
+        return `${this.name} works in ${this.department}.`;
     }
 }
 
-class Team {
+class Location {
     constructor(name) {
         this.name = name;
-        this.players = []; //This creates a new empty array.
+        this.employee = []; //This creates a new empty array.
     }
 
-    addPlayer(player) {
-      if (player instanceof Player) {
-        this.players.push(player);  //this puts new elements into the new array.
+    addEmployee (employee) {
+      if (employee instanceof NewHire) {
+        this.employee.push(employee);  //this puts new elements into the new array.
       } else {
-        throw new Error(`You can only add an instance of Player. Argument is not a player: ${player}`);
+        throw new Error(`You can only add an instance of NewHire. Argument is not a employee: ${employee}`);
       }
     }
 
     describe() {
-        return `${this.name} has ${this.players.length} players.`;
+        return `${this.name} has ${this.employee.length} employees.`;
     }
 }
 
 class Menu {
     constructor(){
-        this.teams = [];
-        this.selectedTeam = null; //starts at no selection when null used.
+        this.location = [];
+        this.selectedLocation = null; //starts at no selection when null used.
     }
 
    start() {
@@ -40,16 +40,16 @@ class Menu {
     while (selection != 0) {       //this is the doing/action part of the menu
         switch (selection) {
             case '1':
-                this.createTeam();
+                this.createLocation();
                 break;
             case '2':
-                this.viewTeam();
+                this.viewLocation();
                 break;
             case '3':
-                this.deleteTeam();
+                this.deleteLocation();
                 break;
             case '4':
-                this.displayTeams();
+                this.displayLocations();
                 break;
             default:
                 selection = 0;
@@ -59,78 +59,79 @@ class Menu {
     
     alert('Goodbye!');
    }
-
+    
+   //This is the visual part, what the web shows.
    showMainMenuOptions() {
-    return prompt(`                //This is the visual part, what the web shows.
-    0) exit
-    1) create new team
-    2) view team
-    3) delete team
-    4) display all teams
+    return prompt(` 
+    0) exit               
+    1) create new location
+    2) view location
+    3) delete location
+    4) display all location
     `)
    }
 
-   showTeamMenuOptions(teamInfo) {
+   showLocationMenuOptions(locationInfo) {
     return prompt(`
         0) back
-        1) create player
-        2) delete player
+        1) create employee
+        2) delete employee
         -------------------
-        ${teamInfo}
+        ${locationInfo}
     `);
    }
 
-   displayTeams() {
-    let teamString = '';
-    for (let i = 0; i < this.teams.length; i++) {
-        teamString += i + ') ' + this.teams[i].name + '\n';
+   displayLocations() {
+    let locationString = '';
+    for (let i = 0; i < this.location.length; i++) {
+        locationString += i + ') ' + this.location[i].name + '\n';
     }
-    alert(teamString);
+    alert(locationString);
    }
-   createTeam() {
-    let name = prompt('Enter name for new team:');
-    this.teams.push(new Team(name));
+   createLocation() {
+    let name = prompt('Enter name for your location:');
+    this.location.push(new Location(name));
    }
 
-   viewTeam() {
-    let index = prompt('Enter the index of the team you wish to view:');
-    if (index > -1 && index < this.teams.length) {
-        this.selectedTeam = this.teams[index];
-        let description = 'Team Name: ' + this.selectedTeam.name + '\n';
+   viewLocation() {
+    let index = prompt('Enter the index of the location you wish to view:');
+    if (index > -1 && index < this.location.length) {
+        this.selectedLocation = this.location[index];
+        let description = 'Location: ' + this.selectedLocation.name + '\n';
 
-        for(let i = 0; i < this.selectedTeam.players.length; i++) {
-            description += i + ') ' + this.selectedTeam.players[i].name 
-             + ' - ' + this.selectedTeam.players[i].position + '\n';
+        for(let i = 0; i < this.selectedLocation.employee.length; i++) {
+            description += i + ') ' + this.selectedLocation.employee[i].name 
+             + ' - ' + this.selectedLocation.employee[i].department + '\n';
         }
 
-        let selection = this.showTeamMenuOptions(description);
+        let selection = this.showLocationMenuOptions(description);
         switch (selection) {
             case '1':
-                this.createPlayer();
+                this.createNewHire();
                 break;
             case '2':
-                this.deletePlayer();
+                this.deleteNewHire();
         }
     }
    }
 
-   deleteTeam() {
-    let index = prompt('Enter the index of the team you wish to delete:');
-    if (index > -1 && index < this.teams.length) {
-        this.teams.splice(index, 1);
+   deleteLocation() {
+    let index = prompt('Enter the index of the location you wish to delete:');
+    if (index > -1 && index < this.location.length) {
+        this.location.splice(index, 1);
         }
    }
 
-   createPlayer() {
-    let name = prompt('Enter name for new player:');
-    let position = prompt('Enter position for new player:');
-    this.selectedTeam.players.push(new Player(name, position));
+   createNewHire() {
+    let name = prompt('Enter name for new employee:');
+    let department = prompt('Enter department for new employee');
+    this.selectedLocation.employee.push(new NewHire(name, department));
    }
 
-   deletePlayer() {
-    let index = prompt('Enter the indes of the player you wish to delete:');
-    if (index > -1 && index < this.selectedTeam.players.length) {
-        this.selectedTeam.players.splice(index, 1);
+   deleteNewHire() {
+    let index = prompt('Enter the index of the employee you wish to delete:');
+    if (index > -1 && index < this.selectedLocation.employee.length) {
+        this.selectedLocation.employee.splice(index, 1);
     }
    }
 }

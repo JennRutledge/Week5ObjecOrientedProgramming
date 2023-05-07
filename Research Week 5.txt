@@ -1,4 +1,0 @@
-Research Week 5
-
-Prompt 1:
-https://www.freecodecamp.org/news/four-pillars-of-object-oriented-programming/
